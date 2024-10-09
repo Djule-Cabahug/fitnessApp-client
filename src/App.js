@@ -3,18 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
 import AppNavbar from './components/AppNavbar';
 import Container from 'react-bootstrap/Container'
-// import Banner from './components/Banner';
-// import Highlights from './components/Highlights';
-import Home from './pages/Home';
-// import News from './pages/News';
-import Profile from './pages/Profile';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import AddProduct from './pages/AddProduct';
-import Products from './pages/Products';
-import ProductView from './pages/ProductView';
-import Cart from './pages/Cart';
-import OrderHistory from './pages/OrderHistory';
+import Workouts from './pages/Workouts';
 import Logout from './pages/Logout';
 import Error from './pages/Error';
 
@@ -26,8 +17,7 @@ function App() {
   //This can be achieved using prop drilling, or via react context
   //This will used to store the user information and will be used for validating if a user  is logged in on the app or not
   const [user, setUser] = useState({
-    id: null,
-    isAdmin: null
+    id: null
   })
 
   //function for clearing localStorage on logout
@@ -36,28 +26,18 @@ function App() {
   }
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/users/details`, {
-      headers: {
-        Authorization: `Bearer ${ localStorage.getItem('token') }`
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      console.log(data.auth !== "Failed")
-      if (data.auth !== "Failed") {
-        setUser({
-          id: data.user._id,
-          isAdmin: data.user.isAdmin
-        });
 
-      } else {
-        setUser({
-          id: null,
-          isAdmin: null
-        });
-      }
-    })
+    if (localStorage.getItem("token")) {
+      
+      setUser({
+        id: localStorage.getItem("token")
+      });
+
+    } else {
+      setUser({
+        id: null
+      });
+    }
   }, []) 
 
   //Used to check if the information is properly stored upon login and the localStorage information is cleared upon logout.
@@ -76,14 +56,7 @@ function App() {
             <AppNavbar/>
             <Container>
               <Routes>
-                {/* <Route path="/news" element={<News />}/> */}
-                <Route path="/" element={<Home />}/>
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/addProduct" element={<AddProduct />} />
-                <Route path="/products" element={<Products />}/>
-                <Route path="/products/:productId/:imageSrc" element={<ProductView/>}/>
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/orders" element={<OrderHistory />}/>
+                <Route path="/workouts" element={<Workouts />}/>
                 <Route path="/login" element={<Login />}/>
                 <Route path="/register" element={<Register />}/>
                 <Route path="/logout" element={<Logout />}/>
