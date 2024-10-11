@@ -5,6 +5,7 @@ import AppNavbar from './components/AppNavbar';
 import Container from 'react-bootstrap/Container'
 import Register from './pages/Register';
 import Login from './pages/Login';
+import Home from './pages/Home';
 import Workouts from './pages/Workouts';
 import Logout from './pages/Logout';
 import Error from './pages/Error';
@@ -56,6 +57,7 @@ function App() {
             <AppNavbar/>
             <Container>
               <Routes>
+                <Route path='/' element={<Home />}/>
                 <Route path="/workouts" element={<Workouts />}/>
                 <Route path="/login" element={<Login />}/>
                 <Route path="/register" element={<Register />}/>
